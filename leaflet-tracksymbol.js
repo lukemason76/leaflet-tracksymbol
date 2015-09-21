@@ -90,3 +90,7 @@ L.TrackSymbol = L.Path.extend({
   }
 });
 
+L.trackSymbol = function (latlng, options) {
+    return new L.TrackSymbol(latlng, options);
+};
+
