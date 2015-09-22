@@ -1,5 +1,5 @@
 /**
- * Tracksymbol forleaflet
+ * Tracksymbol for leaflet
  * @class TrackSymbol
  * @constructor
  */
