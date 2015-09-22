@@ -1,4 +1,4 @@
-var L.TrackLayer = (function () {
+var L.TrackLayer = function () {
   var mmsiToMarker = {};
   var aislayer = L.featureGroup([]);
 
@@ -7,7 +7,7 @@ var L.TrackLayer = (function () {
     marker.addTo(aislayer);
   };
 
-}());
+};
 
 var L.trackLayer = function() {
   return new L.TrackLayer();
