@@ -1,4 +1,4 @@
-var L.TrackLayer = function() {
+L.TrackLayer = function() {
   var aislayer = L.featureGroup([]);
 
   this.addTrackMarker = function(llPoint) {
@@ -7,7 +7,7 @@ var L.TrackLayer = function() {
   };
 };
 
-var L.trackLayer = function() {
+L.trackLayer = function() {
   return new L.TrackLayer();
 };
 
