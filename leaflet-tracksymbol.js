@@ -12,7 +12,7 @@ L.TrackSymbol = L.Path.extend({
     this._heading = options.heading || 0.0;
     this._course = options.course || 0.0;
     this._speed = options.speed || 0.0;
-    this._triSymbol: [2,0, 0,1, 0,-1];
+    this._triSymbol = [2,0, 0,1, 0,-1];
   },
 
   setLatLng: function (latlng) {
