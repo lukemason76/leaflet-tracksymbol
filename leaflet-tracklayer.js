@@ -5,6 +5,10 @@ L.TrackLayer = function() {
     var marker = L.trackSymbol(llPoint);
     marker.addTo(aislayer);
   };
+
+  this.addTo = function(map) {
+    aislayer.addTo(map);
+  };
 };
 
 L.trackLayer = function() {
