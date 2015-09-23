@@ -86,7 +86,7 @@ L.TrackSymbol = L.Path.extend({
   },
 
   getPathString: function () {
-    var viewPoints = _rotateAllPoints(this._triSymbol, this._course);
+    var viewPoints = this._rotateAllPoints(this._triSymbol, this._course);
     return createPathStringFromPoints(viewPoints);
   }
 });
