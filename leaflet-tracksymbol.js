@@ -8,12 +8,13 @@ L.TrackSymbol = L.Path.extend({
   initialize: function (latlng, options) {
     L.Path.prototype.initialize.call(this, options);
     options = options || {};
+    this._id = options.trackId || 0;
     this._latlng = L.latLng(latlng);
-    this._size = options.size || 16;
+    this._size = options.size || 24;
     this._heading = options.heading || 0.0;
     this._course = options.course || 0.0;
     this._speed = options.speed || 0.0;
-    this._triSymbol = [2,0, 0,1, 0,-1];
+    this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
   },
 
   setLatLng: function (latlng) {
@@ -29,6 +30,10 @@ L.TrackSymbol = L.Path.extend({
   setCourse: function( course ) {
     this._course = course;
     return this.redraw();
+  },
+
+  getTrackId: function() {
+    return this._trackId;
   },
 
   _getLatSize: function () {
@@ -65,8 +70,8 @@ L.TrackSymbol = L.Path.extend({
   _rotateAllPoints: function(points, angle) {
     var result = [];
     for(var i=0;i<points.length;i+=2) {
-      var x = points[i + 0];
-      var y = points[i + 1];
+      var x = points[i + 0] * this._size;
+      var y = points[i + 1] * this._size;
       var pt = this._rotate([x, y], angle);
       result.push(pt[0]);
       result.push(pt[1]);
@@ -79,7 +84,7 @@ L.TrackSymbol = L.Path.extend({
     var symbolViewCenter = this._map.latLngToLayerPoint(this._latlng);
     for(var i=0;i<points.length;i+=2) {
       var x = symbolViewCenter.x + points[i+0];
-      var y = symbolViewCenter.y + points[i+1];
+      var y = symbolViewCenter.y - points[i+1];
       result.push(x);
       result.push(y);
     }
@@ -100,8 +105,8 @@ L.TrackSymbol = L.Path.extend({
   },
 
   getPathString: function () {
-    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, this._course) );
-    console.log('viewPoints', viewPoints);
+    var angle = Math.PI/2.0 - this._heading;
+    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, angle) );
     return this._createPathFromPoints(viewPoints);
   }
 });

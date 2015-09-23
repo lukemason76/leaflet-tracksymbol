@@ -1,7 +1,7 @@
 L.TrackLayer = function() {
   var aislayer = L.featureGroup([]);
 
-  this.addMarker = function(marker) {
+  this.addTrack = function(marker) {
     marker.addTo(aislayer);
   };
 
