@@ -14,6 +14,7 @@ L.TrackSymbol = L.Path.extend({
     this._heading = options.heading || 0.0;
     this._course = options.course || 0.0;
     this._speed = options.speed || 0.0;
+    this._leaderTime = options.leaderTime || 60.0;
     this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
   },
 
@@ -37,16 +38,25 @@ L.TrackSymbol = L.Path.extend({
   },
 
   _getLatSize: function () {
-    return (this._size / 40075017) * 360;
+    return this._getLatSizeOf(this._size);
   },
 
-  _getLngRadius: function () {
-    return ((this._size / 40075017) * 360) / Math.cos(L.LatLng.DEG_TO_RAD * this._latlng.lat);
+  _getLngSize: function () {
+    return this._getLngSizeOf(this._size);
   },
+  
+  _getLatSizeOf: function (value) {
+    return (value / 40075017) * 360;
+  },
+
+  _getLngSizeOf: function (value) {
+    return ((value / 40075017) * 360) / Math.cos(L.LatLng.DEG_TO_RAD * this._latlng.lat);
+  },
+
 
   getBounds: function () {
-     var lngSize = this._getLngSize();
-     var latSize = this._getLatSize();
+     var lngSize = this._getLngSize() / 2.0;
+     var latSize = this._getLatSize() / 2.0;
      var latlng = this._latlng;
      return new L.LatLngBounds(
             [latlng.lat - latSize, latlng.lng - lngSize],
@@ -79,6 +89,16 @@ L.TrackSymbol = L.Path.extend({
     return result;
   },
 
+  _createLeaderViewPoints: function(angle) {
+    var result = [];
+    var leaderLength = this._speed * this._leaderTime;
+    var leaderEndLng = this._latlng.lng + this._getLngSizeOf(leaderLength * Math.cos(angle));
+    var leaderEndLat = this._latlng.lat + this._getLatSizeOf(leaderLength * Math.sin(angle));
+    var endPoint = this._map.latLngToLayerPoint(L.latLng([leaderEndLat, leaderEndLng]));
+    var startPoint = this._map.latLngToLayerPoint(this._latlng);
+    return [startPoint.x, startPoint.y, endPoint.x, endPoint.y];
+  },
+
   _transformAllPointsToView: function(points) {
     var result = [];
     var symbolViewCenter = this._map.latLngToLayerPoint(this._latlng);
@@ -105,9 +125,11 @@ L.TrackSymbol = L.Path.extend({
   },
 
   getPathString: function () {
-    var angle = Math.PI/2.0 - this._heading;
-    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, angle) );
-    return this._createPathFromPoints(viewPoints);
+    var headingAngle = Math.PI/2.0 - this._heading;
+    var courseAngle = Math.PI/2.0 - this._course;
+    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, headingAngle) );
+    var leaderPoints = this._createLeaderViewPoints(courseAngle);
+    return this._createPathFromPoints(viewPoints) + ' ' + this._createPathFromPoints(leaderPoints);
   }
 });
 
