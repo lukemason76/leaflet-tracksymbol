@@ -7,6 +7,7 @@ L.TrackSymbol = L.Path.extend({
 
   initialize: function (latlng, options) {
     L.Path.prototype.initialize.call(this, options);
+    options = options || {};
     this._latlng = L.latLng(latlng);
     this._size = options.size || 16;
     this._heading = options.heading || 0.0;
