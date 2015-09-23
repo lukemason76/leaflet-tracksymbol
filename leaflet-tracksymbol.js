@@ -23,10 +23,12 @@ L.TrackSymbol = L.Path.extend({
   
   setSpeed: function( speed ) {
     this._speed = speed;
+    return this.redraw();
   },
   
   setCourse: function( course ) {
     this._course = course;
+    return this.redraw();
   },
 
   _getLatSize: function () {
@@ -65,16 +67,28 @@ L.TrackSymbol = L.Path.extend({
     for(var i=0;i<points.length;i+=2) {
       var x = points[i + 0];
       var y = points[i + 1];
-      var pt = rotate([x, y], angle);
+      var pt = this._rotate([x, y], angle);
       result.push(pt[0]);
       result.push(pt[1]);
     }
     return result;
   },
 
+  _transformAllPointsToView: function(points) {
+    var result = [];
+    var symbolViewCenter = this._map.latLngToLayerPoint(this._latlng);
+    for(var i=0;i<points.length;i+=2) {
+      var x = symbolViewCenter.x + points[i+0];
+      var y = symbolViewCenter.y + points[i+1];
+      result.push(x);
+      result.push(y);
+    }
+    return result;
+  },
+
   _createPathFromPoints: function(points) {
     var result;
-    for(var i=0;i<points.length;i+2) {
+    for(var i=0;i<points.length;i+=2) {
       var x = points[i+0];
       var y = points[i+1];
       if(result === undefined)
@@ -86,8 +100,9 @@ L.TrackSymbol = L.Path.extend({
   },
 
   getPathString: function () {
-    var viewPoints = this._rotateAllPoints(this._triSymbol, this._course);
-    return createPathStringFromPoints(viewPoints);
+    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, this._course) );
+    console.log('viewPoints', viewPoints);
+    return this._createPathFromPoints(viewPoints);
   }
 });
 
