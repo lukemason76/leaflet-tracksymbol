@@ -4,6 +4,9 @@ Example
 -------
 
 	var latlng = L.latLng(20, 30);
+	var speed = 10.0 // In m/s
+	var course = 45.0 * Math.PI / 180.0; // Radians from north
+	var heading = 45.0 * Math.PI / 180.0; // Radians from north
 
 	var trackMarker = L.trackSymbol(latlng, {
         	trackId: 123,
@@ -14,9 +17,9 @@ Example
         	color: '#000000',
        		opacity: 1.0,
        		weight: 1.0,
-        	speed: track.speed,
-        	course: track.course,
-        	heading: track.heading
+        	speed: speed,
+        	course: course,
+        	heading: heading
       	});
 
 	trackMarker.addTo(map);
