@@ -5,6 +5,11 @@ L.TrackLayer = function() {
     marker.addTo(aislayer);
   };
 
+  this.removeTrack = function(marker) {
+    marker.removeLayer(aislayer);
+  };
+
+
   this.addTo = function(map) {
     aislayer.addTo(map);
   };
