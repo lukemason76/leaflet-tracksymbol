@@ -16,6 +16,7 @@ L.TrackSymbol = L.Path.extend({
     this._speed = options.speed || 0.0;
     this._leaderTime = options.leaderTime || 60.0;
     this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
+    this._diaSymbol = [0.5,0, 0,0.5, -0.5,0, 0,-0.5];
   },
 
   setLatLng: function (latlng) {
@@ -130,11 +131,28 @@ L.TrackSymbol = L.Path.extend({
   },
 
   getPathString: function () {
-    var headingAngle = Math.PI/2.0 - this._heading;
-    var courseAngle = Math.PI/2.0 - this._course;
-    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, headingAngle) );
-    var leaderPoints = this._createLeaderViewPoints(courseAngle);
-    return this._createPathFromPoints(viewPoints) + ' ' + this._createPathFromPoints(leaderPoints);
+    var viewPath = '';
+    if(this._heading === undefined) {
+      var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._diaSymbol, 0.0) );
+      viewPath += this._createPathFromPoints(viewPoints);
+      if( this._course !== undefined ) {
+        var courseAngle = Math.PI/2.0 - this._course;
+        var leaderPoints = this._createLeaderViewPoints(courseAngle);
+        viewPath += '' + this._createPathFromPoints(leaderPoints);
+      }
+      return viewPath;
+    }
+    else {
+      var headingAngle = Math.PI/2.0 - this._heading;
+      var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, headingAngle) );
+      viewPath += this._createPathFromPoints(viewPoints);
+      if( this._course !== undefined ) {
+        var courseAngle = Math.PI/2.0 - this._course;
+        var leaderPoints = this._createLeaderViewPoints(courseAngle);
+        viewPath += '' + this._createPathFromPoints(leaderPoints);
+      }
+      return viewPath;
+    }
   }
 });
 
