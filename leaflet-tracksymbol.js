@@ -32,6 +32,11 @@ L.TrackSymbol = L.Path.extend({
     this._course = course;
     return this.redraw();
   },
+  
+  setHeading: function( heading ) {
+    this._heading = heading;
+    return this.redraw();
+  },
 
   getTrackId: function() {
     return this._trackId;
