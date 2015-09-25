@@ -11,12 +11,12 @@ L.TrackSymbol = L.Path.extend({
     this._id = options.trackId || 0;
     this._latlng = L.latLng(latlng);
     this._size = options.size || 24;
-    this._heading = options.heading || 0.0;
-    this._course = options.course || 0.0;
-    this._speed = options.speed || 0.0;
+    this._heading = options.heading;
+    this._course = options.course;
+    this._speed = options.speed;
     this._leaderTime = options.leaderTime || 60.0;
     this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
-    this._diaSymbol = [0.5,0, 0,0.5, -0.5,0, 0,-0.5];
+    this._diaSymbol = [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
   },
 
   setLatLng: function (latlng) {
