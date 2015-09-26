@@ -15,6 +15,7 @@ L.TrackSymbol = L.Path.extend({
     this._course = options.course;
     this._speed = options.speed;
     this._leaderTime = options.leaderTime || 60.0;
+    this._minSilouetteZoom = options.minSilouetteZoom || 13;
     this.setGPSRefPos(options.gpsRefPos);
     this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
     this._diaSymbol = [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
@@ -234,7 +235,7 @@ L.TrackSymbol = L.Path.extend({
       return this._createNoHeadingSymbolPathString();
     }
     else {
-      if(this._gpsRefPos === undefined) {
+      if(this._gpsRefPos === undefined || this._map.getZoom() <= this._minSilouetteZoom ) {
         return this._createWithHeadingSymbolPathString();
       }
       else {
