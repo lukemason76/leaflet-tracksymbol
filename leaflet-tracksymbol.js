@@ -15,10 +15,10 @@ L.TrackSymbol = L.Path.extend({
     this._course = options.course;
     this._speed = options.speed;
     this._leaderTime = options.leaderTime || 60.0;
-    this._gpsRefPos = options.gpsRefPos || [50,50,10,10];
+    this.setGPSRefPos(options.gpsRefPos);
     this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
     this._diaSymbol = [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
-    this._silSymbol = [1,0, 0.5,1, -1,1, -1,-1, 0.5,-1];
+    this._silSymbol = [1,0.5, 0.75,1, 0,1, 0,0, 0.75,0];
   },
 
   setLatLng: function (latlng) {
@@ -38,6 +38,23 @@ L.TrackSymbol = L.Path.extend({
   
   setHeading: function( heading ) {
     this._heading = heading;
+    return this.redraw();
+  },
+
+  setGPSRefPos: function(gpsRefPos) {
+    if(gpsRefPos === undefined || 
+       gpsRefPos.length < 4) {
+      this._gpsRefPos = undefined;
+    }
+    else if(gpsRefPos[0] === 0 && 
+            gpsRefPos[1] === 0 && 
+            gpsRefPos[2] === 0 && 
+            gpsRefPos[3] === 0) {
+      this._gpsRefPos = undefined;
+    }
+    else {
+      this._gpsRefPos = gpsRefPos;
+    }
     return this.redraw();
   },
 
@@ -166,11 +183,25 @@ L.TrackSymbol = L.Path.extend({
     ];
   },
 
+  _getSizeFromGPSRefPos: function() {
+    return [
+      this._gpsRefPos[0] + this._gpsRefPos[1],
+      this._gpsRefPos[2] + this._gpsRefPos[3]
+    ];
+  },
+
+  _getOffsetFromGPSRefPos: function() {
+    return [
+      -this._gpsRefPos[1], 
+      -this._gpsRefPos[3]
+    ];
+  },
+
   _transformSilouetteSymbol: function() {
     var headingAngle = this._getViewAngleFromModel(this._heading);
     var result = [];
-    var size = [100, 50];
-    var offset = [0, 0];
+    var size = this._getSizeFromGPSRefPos();
+    var offset = this._getOffsetFromGPSRefPos();
     for(var i=0;i<this._silSymbol.length;i+=2) {
       var pt = [
         this._silSymbol[i+0], 
