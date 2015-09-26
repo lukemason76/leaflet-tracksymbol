@@ -15,8 +15,10 @@ L.TrackSymbol = L.Path.extend({
     this._course = options.course;
     this._speed = options.speed;
     this._leaderTime = options.leaderTime || 60.0;
+    this._gpsRefPos = options.gpsRefPos || [50,50,10,10];
     this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
     this._diaSymbol = [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
+    this._silSymbol = [1,0, 0.5,1, -1,1, -1,-1, 0.5,-1];
   },
 
   setLatLng: function (latlng) {
@@ -130,28 +132,83 @@ L.TrackSymbol = L.Path.extend({
     return result + ' Z';
   },
 
+  _getViewAngleFromModel:  function(modelAngle) {
+    return Math.PI/2.0 - modelAngle;
+  },
+
+  _createNoHeadingSymbolPathString: function() {
+    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._diaSymbol, 0.0) );
+    var viewPath = this._createPathFromPoints(viewPoints);
+    if( this._course !== undefined ) {
+      var courseAngle = this._getViewAngleFromModel(this._course);
+      var leaderPoints = this._createLeaderViewPoints(courseAngle);
+      viewPath += '' + this._createPathFromPoints(leaderPoints);
+    }
+    return viewPath;
+  },
+
+  _createWithHeadingSymbolPathString: function() {
+    var headingAngle = this._getViewAngleFromModel(this._heading);
+    var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, headingAngle) );
+    var viewPath = this._createPathFromPoints(viewPoints);
+    if( this._course !== undefined ) {
+      var courseAngle = this._getViewAngleFromModel(this._course);
+      var leaderPoints = this._createLeaderViewPoints(courseAngle);
+      viewPath += '' + this._createPathFromPoints(leaderPoints);
+    }
+    return viewPath;
+  },
+
+  _resizeAndMovePoint: function(point, size, offset) {
+    return [
+      point[0] * size[0] + offset[0], 
+      point[1] * size[1] + offset[1]
+    ];
+  },
+
+  _transformSilouetteSymbol: function() {
+    var headingAngle = this._getViewAngleFromModel(this._heading);
+    var result = [];
+    var size = [100, 50];
+    var offset = [0, 0];
+    for(var i=0;i<this._silSymbol.length;i+=2) {
+      var pt = [
+        this._silSymbol[i+0], 
+        this._silSymbol[i+1]
+      ];
+      pt = this._resizeAndMovePoint(pt, size, offset);
+      pt = this._rotate(pt, headingAngle);
+      var pointLng = this._latlng.lng + this._getLngSizeOf(pt[0]);
+      var pointLat = this._latlng.lat + this._getLatSizeOf(pt[1]);
+      var viewPoint = this._map.latLngToLayerPoint(L.latLng([pointLat, pointLng]));
+      result.push(viewPoint.x);
+      result.push(viewPoint.y);
+    }
+    return result;
+  },
+
+  _createSilouetteSymbolPathString: function() {
+    var silouettePoints = this._transformSilouetteSymbol();
+    var viewPath = this._createPathFromPoints(silouettePoints);
+    if( this._course !== undefined ) {
+      var courseAngle = this._getViewAngleFromModel(this._course);
+      var leaderPoints = this._createLeaderViewPoints(courseAngle);
+      viewPath += '' + this._createPathFromPoints(leaderPoints);
+    }
+    return viewPath;
+  },
+
   getPathString: function () {
-    var viewPath = '';
     if(this._heading === undefined) {
-      var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._diaSymbol, 0.0) );
-      viewPath += this._createPathFromPoints(viewPoints);
-      if( this._course !== undefined ) {
-        var courseAngle = Math.PI/2.0 - this._course;
-        var leaderPoints = this._createLeaderViewPoints(courseAngle);
-        viewPath += '' + this._createPathFromPoints(leaderPoints);
-      }
-      return viewPath;
+      return this._createNoHeadingSymbolPathString();
     }
     else {
-      var headingAngle = Math.PI/2.0 - this._heading;
-      var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, headingAngle) );
-      viewPath += this._createPathFromPoints(viewPoints);
-      if( this._course !== undefined ) {
-        var courseAngle = Math.PI/2.0 - this._course;
-        var leaderPoints = this._createLeaderViewPoints(courseAngle);
-        viewPath += '' + this._createPathFromPoints(leaderPoints);
+      if(this._gpsRefPos === undefined) {
+        return this._createWithHeadingSymbolPathString();
       }
-      return viewPath;
+      else {
+        return this._createSilouetteSymbolPathString();
+      }
     }
   }
 });
