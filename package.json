@@ -1,0 +1,25 @@
+{
+  "name": "leaflet-tracksymbol",
+  "version": "0.0.2",
+  "description": "A triangular symbol for showing tracks on a leaflet-layer",
+  "main": "leaflet-tracksymbol.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lethexa/leaflet-tracksymbol.git"
+  },
+  "keywords": [
+    "marker"
+  ],
+  "author": "Tim Leerhoff <tleerhof@web.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lethexa/leaflet-tracksymbol/issues"
+  },
+  "homepage": "https://github.com/lethexa/leaflet-tracksymbol#readme"
+}

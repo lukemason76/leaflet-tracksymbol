@@ -1,4 +1,5 @@
 This is a symbol for leaflet-layers showing tracks with speed, course and heading.
+The source code can be found on [github].
 
 Example
 -------
@@ -24,3 +25,5 @@ Example
 
 	trackMarker.addTo(map);
 
+
+[github]: https://github.com/lethexa/leaflet-tracksymbol "Tracksymbol GitHub repository"
