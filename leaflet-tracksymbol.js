@@ -17,9 +17,9 @@ L.TrackSymbol = L.Path.extend({
     this._leaderTime = options.leaderTime || 60.0;
     this._minSilouetteZoom = options.minSilouetteZoom || 13;
     this.setGPSRefPos(options.gpsRefPos);
-    this._triSymbol = [0.75,0, -0.25,0.3, -0.25,-0.3];
-    this._diaSymbol = [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
-    this._silSymbol = [1,0.5, 0.75,1, 0,1, 0,0, 0.75,0];
+    this._triSymbol = options.defaultSymbol || [0.75,0, -0.25,0.3, -0.25,-0.3];
+    this._diaSymbol = options.noHeadingSymbol || [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
+    this._silSymbol = options.silouetteSymbol || [1,0.5, 0.75,1, 0,1, 0,0, 0.75,0];
   },
 
   setLatLng: function (latlng) {
