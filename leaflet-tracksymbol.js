@@ -6,6 +6,7 @@
  * If heading is undefined a diamond symbol is rendered.
  * The following options are available:
  * <ul>
+ *   <li>trackId: The unique id of the symbol (default: 0). </li>
  *   <li>size: Static size of the symbol in pixels (default:24). </li>
  *   <li>heading: Initial heading of the symbol (default: undefined). </li>
  *   <li>course: Initial course of the symbol (default: undefined). </li>
@@ -28,6 +29,7 @@ L.TrackSymbol = L.Path.extend({
     L.Path.prototype.initialize.call(this, options);
     options = options || {};
     this._id = options.trackId || 0;
+    this._leaflet_id = this._id; 
     this._latlng = L.latLng(latlng);
     this._size = options.size || 24;
     this._heading = options.heading;
