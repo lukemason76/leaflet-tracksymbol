@@ -15,6 +15,8 @@
  * </ul>
  * @class TrackSymbol
  * @constructor
+ * @param latlng {LanLng} The initial position of the symbol.
+ * @param options {Object} The initial options described above.
  */
 L.TrackSymbol = L.Path.extend({
 
@@ -306,6 +308,10 @@ L.TrackSymbol = L.Path.extend({
     return viewPath;
   },
 
+  /**
+   * Generates the symbol as SVG path string.
+   * @return {String} The symbol path string.
+   */
   getPathString: function () {
     if(this._heading === undefined) {
       return this._createNoHeadingSymbolPathString();
