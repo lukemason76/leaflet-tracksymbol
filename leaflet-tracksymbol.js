@@ -1,5 +1,18 @@
 /**
- * Tracksymbol for leaflet
+ * Tracksymbol for leaflet.
+ * The following options are available:
+ * <ul>
+ *   <li>size: Static size of the symbol in pixels (default:24). </li>
+ *   <li>heading: Initial heading of the symbol (default: undefined). </li>
+ *   <li>course: Initial course of the symbol (default: undefined). </li>
+ *   <li>speed: Initial speed of the symbol-leader (default: undefined). </li>
+ *   <li>leaderTime: The length of the leader (speed * leaderTime) (default:60s). </li>
+ *   <li>minSilouetteZoom: The zoomlevel to switch from triangle to silouette (default:13). </li>
+ *   <li>gpsRefPos: Initial GPS offset of the symbol (default: undefined). </li>
+ *   <li>defaultSymbol: The triangular track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...] </li>
+ *   <li>noHeadingSymbol: The diamond track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...] </li>
+ *   <li>silouetteSymbol: The ship track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...] </li>
+ * </ul>
  * @class TrackSymbol
  * @constructor
  */
@@ -22,26 +35,56 @@ L.TrackSymbol = L.Path.extend({
     this._silSymbol = options.silouetteSymbol || [1,0.5, 0.75,1, 0,1, 0,0, 0.75,0];
   },
 
+  /**
+   * Set latitude/longitude on the symbol.
+   * @method setLatLng
+   * @param latlng {LatLng} Position of the symbol on the map. 
+   */
   setLatLng: function (latlng) {
     this._latlng = L.latLng(latlng);
     return this.redraw();
   },
   
+  /**
+   * Set the speed shown in the symbol [m/s].
+   * The leader-length is calculated via leaderTime.
+   * @method setSpeed
+   * @param speed {Number} The speed in [m/s]. 
+   */
   setSpeed: function( speed ) {
     this._speed = speed;
     return this.redraw();
   },
   
+  /**
+   * Sets the course over ground [rad].
+   * The speed-leader points in this direction.
+   * @method setCourse
+   * @param course {Number} The course in radians.
+   */
   setCourse: function( course ) {
     this._course = course;
     return this.redraw();
   },
   
+  /**
+   * Sets the heading of the symbol [rad].
+   * The heading rotates the symbol.
+   * @method setHeading
+   * @param course {Number} The heading in radians.
+   */
   setHeading: function( heading ) {
     this._heading = heading;
     return this.redraw();
   },
 
+  /**
+   * Sets the position offset of the silouette to the center of the symbol.
+   * The array contains the refpoints from ITU R-REC-M.1371-4-201004 page 108
+   * in sequence A,B,C,D.
+   * @method setGPSRefPos
+   * @param gpsRefPos {Array} The GPS offset from center.
+   */
   setGPSRefPos: function(gpsRefPos) {
     if(gpsRefPos === undefined || 
        gpsRefPos.length < 4) {
@@ -59,14 +102,30 @@ L.TrackSymbol = L.Path.extend({
     return this.redraw();
   },
 
+  /**
+   * Returns the trackId.
+   * @method getTrackId
+   * @return {Number} The track id.
+   */
   getTrackId: function() {
     return this._trackId;
   },
     
+  /**
+   * Sets the line color of the symbol.
+   * @method setColor
+   * @param color {String} The color string.
+   */
   setColor: function(color) {
-      this.setStyle({color: color})
+    this.setStyle({color: color})
+    return this.redraw(); 
   },
     
+  /**
+   * Sets the fill color of the symbol.
+   * @method setFillColor
+   * @param color {String} The color string.
+   */
   setFillColor: function(color) {
       this.setStyle({fillColor: color})
   },
@@ -87,7 +146,11 @@ L.TrackSymbol = L.Path.extend({
     return ((value / 40075017) * 360) / Math.cos(L.LatLng.DEG_TO_RAD * this._latlng.lat);
   },
 
-
+  /**
+   * Returns the bounding box of the symbol.
+   * @method getBounds
+   * @return {LatLngBounds} The bounding box.
+   */
   getBounds: function () {
      var lngSize = this._getLngSize() / 2.0;
      var latSize = this._getLatSize() / 2.0;
@@ -97,6 +160,11 @@ L.TrackSymbol = L.Path.extend({
             [latlng.lat + latSize, latlng.lng + lngSize]);
   },
 
+  /**
+   * Returns the position of the symbol on the map.
+   * @mathod getLatLng
+   * @return {LatLng} The position object.
+   */
   getLatLng: function () {
     return this._latlng;
   },
@@ -253,6 +321,12 @@ L.TrackSymbol = L.Path.extend({
   }
 });
 
+/**
+ * Factory function to create the symbol.
+ * @method trackSymbol
+ * @param latlng {LatLng} The position on the map.
+ * @param options {Object} Additional options. 
+ */
 L.trackSymbol = function (latlng, options) {
     return new L.TrackSymbol(latlng, options);
 };
