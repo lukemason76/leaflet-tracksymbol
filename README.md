@@ -49,6 +49,8 @@ Example
 	trackMarker.addTo(map);
 
 
+![Silouette](https://raw.githubusercontent.com/lethexa/leaflet-tracksymbol/master/silouette.png)
+
 ![Example](https://raw.githubusercontent.com/lethexa/leaflet-tracksymbol/master/example.png)
 
 [github]: https://github.com/lethexa/leaflet-tracksymbol "Tracksymbol GitHub repository"
