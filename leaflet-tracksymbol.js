@@ -62,6 +62,14 @@ L.TrackSymbol = L.Path.extend({
   getTrackId: function() {
     return this._trackId;
   },
+    
+  setColor: function(color) {
+      this.setStyle({color: color})
+  },
+    
+  setFillColor: function(color) {
+      this.setStyle({fillColor: color})
+  },
 
   _getLatSize: function () {
     return this._getLatSizeOf(this._size);
