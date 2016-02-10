@@ -1,5 +1,9 @@
 /**
  * Tracksymbol for leaflet.
+ * The visualization is chosen by zoomlevel or heading availability.
+ * If zoomlevel is smaller than 'minSilouetteZoom' a triangular symbol is rendered.
+ * If zoomlevel is greater than 'minSilouetteZoom' a ship silouette is rendered.
+ * If heading is undefined a diamond symbol is rendered.
  * The following options are available:
  * <ul>
  *   <li>size: Static size of the symbol in pixels (default:24). </li>
@@ -310,6 +314,7 @@ L.TrackSymbol = L.Path.extend({
 
   /**
    * Generates the symbol as SVG path string.
+   * depending on zoomlevel or track heading different symbol types are generated.
    * @return {String} The symbol path string.
    */
   getPathString: function () {
