@@ -49,6 +49,6 @@ Example
 	trackMarker.addTo(map);
 
 
-![alt tag](https://raw.github.com/lethexa/leaflet-tracksymbol/branch/master/example.png)
+![Example](https://raw.githubusercontent.com/lethexa/leaflet-tracksymbol/master/example.png)
 
 [github]: https://github.com/lethexa/leaflet-tracksymbol "Tracksymbol GitHub repository"
