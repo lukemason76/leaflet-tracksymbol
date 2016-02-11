@@ -27,6 +27,8 @@ L.TrackSymbol = L.Path.extend({
 
   initialize: function (latlng, options) {
     L.Path.prototype.initialize.call(this, options);
+    if(latlng === undefined)
+      throw Error('Please give a valid lat/lon-position');
     options = options || {};
     this._id = options.trackId || 0;
     this._leaflet_id = this._id; 
@@ -177,6 +179,13 @@ L.TrackSymbol = L.Path.extend({
     return this._latlng;
   },
 
+  //
+  // Rotates the given point around the angle.
+  // @method _rotate
+  // @param point {Array} A point vector 2d.
+  // @param angle {Number} Angle for rotation [rad].
+  // @return The rotated vector 2d.
+  //
   _rotate: function(point, angle) {
     var x = point[0];
     var y = point[1];
@@ -187,6 +196,13 @@ L.TrackSymbol = L.Path.extend({
     return [newX, newY];
   },
 
+  //
+  // Rotates the given point-array around the angle.
+  // @method _rotateAllPoints
+  // @param points {Array} A point vector 2d.
+  // @param angle {Number} Angle for rotation [rad].
+  // @return The rotated vector-array 2d.
+  //
   _rotateAllPoints: function(points, angle) {
     var result = [];
     for(var i=0;i<points.length;i+=2) {
