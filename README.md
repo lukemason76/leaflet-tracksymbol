@@ -17,7 +17,7 @@ The following options are available:
  * course: Initial course of the symbol (default: undefined).
  * speed: Initial speed of the symbol-leader (default: undefined).
  * leaderTime: The length of the leader in seconds (speed * leaderTime) (default:60).
- * minSilouetteZoom: The zoomlevel to switch from triangle to silouette (default:13).
+ * minSilouetteZoom: The zoomlevel to switch from triangle to silouette (default:14).
  * gpsRefPos: Initial GPS offset of the symbol (default: undefined).
  * defaultSymbol: The triangular track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...]
  * noHeadingSymbol: The diamond track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...]

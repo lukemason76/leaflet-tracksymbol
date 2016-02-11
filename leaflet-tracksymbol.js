@@ -12,7 +12,7 @@
  *   <li>course: Initial course of the symbol (default: undefined). </li>
  *   <li>speed: Initial speed of the symbol-leader (default: undefined). </li>
  *   <li>leaderTime: The length of the leader (speed * leaderTime) (default:60s). </li>
- *   <li>minSilouetteZoom: The zoomlevel to switch from triangle to silouette (default:13). </li>
+ *   <li>minSilouetteZoom: The zoomlevel to switch from triangle to silouette (default:14). </li>
  *   <li>gpsRefPos: Initial GPS offset of the symbol (default: undefined). </li>
  *   <li>defaultSymbol: The triangular track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...] </li>
  *   <li>noHeadingSymbol: The diamond track symbol. Contains an array of n numbers. [x1,y1,x2,y2,...] </li>
@@ -36,7 +36,7 @@ L.TrackSymbol = L.Path.extend({
     this._course = options.course;
     this._speed = options.speed;
     this._leaderTime = options.leaderTime || 60.0;
-    this._minSilouetteZoom = options.minSilouetteZoom || 13;
+    this._minSilouetteZoom = options.minSilouetteZoom || 14;
     this.setGPSRefPos(options.gpsRefPos);
     this._triSymbol = options.defaultSymbol || [0.75,0, -0.25,0.3, -0.25,-0.3];
     this._diaSymbol = options.noHeadingSymbol || [0.3,0, 0,0.3, -0.3,0, 0,-0.3];
