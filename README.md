@@ -28,7 +28,7 @@ Example
 -------
 
 	var latlng = L.latLng(20, 30);
-	var speed = 10.0 // In m/s
+	var speed = 10.0; // In m/s
 	var course = 45.0 * Math.PI / 180.0; // Radians from north
 	var heading = 45.0 * Math.PI / 180.0; // Radians from north
 
