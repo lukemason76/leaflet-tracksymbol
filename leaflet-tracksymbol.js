@@ -27,8 +27,9 @@ L.TrackSymbol = L.Path.extend({
 
   initialize: function (latlng, options) {
     L.Path.prototype.initialize.call(this, options);
-    if(latlng === undefined)
+    if(latlng === undefined) {
       throw Error('Please give a valid lat/lon-position');
+    }
     options = options || {};
     this._id = options.trackId || 0;
     this._leaflet_id = this._id; 
