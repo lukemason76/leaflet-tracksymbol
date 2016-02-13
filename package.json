@@ -1,6 +1,6 @@
 {
   "name": "leaflet-tracksymbol",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A triangular symbol for showing tracks on a leaflet-layer",
   "main": "leaflet-tracksymbol.js",
   "scripts": {
