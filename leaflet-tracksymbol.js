@@ -122,25 +122,6 @@ L.TrackSymbol = L.Path.extend({
     return this._trackId;
   },
     
-  /**
-   * Sets the line color of the symbol.
-   * @method setColor
-   * @param color {String} The color string.
-   */
-  setColor: function(color) {
-    this.setStyle({color: color})
-    return this.redraw(); 
-  },
-    
-  /**
-   * Sets the fill color of the symbol.
-   * @method setFillColor
-   * @param color {String} The color string.
-   */
-  setFillColor: function(color) {
-      this.setStyle({fillColor: color})
-  },
-
   _getLatSize: function () {
     return this._getLatSizeOf(this._size);
   },
