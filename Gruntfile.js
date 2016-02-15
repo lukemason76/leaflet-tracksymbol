@@ -19,6 +19,16 @@ module.exports = function (grunt) {
             }
         },
 
+        concat: {
+          options: {
+            separator: ';',
+          },
+          dist: {
+            src: ['lib/tracksymbol.js'],
+            dest: 'leaflet-tracksymbol.js',
+          },
+        },
+
         jshint: {
             all: ['lib/*.js']
         },
@@ -64,10 +74,6 @@ module.exports = function (grunt) {
           }
         },
 
-        browserify: {
-          'leaflet-tracksymbol.js': ['lib/tracksymbol.js']
-        },
-
         uglify: {
           options: {
             banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> Copyright by <%= pkg.author.name %> <%= pkg.author.email %> */\n'
@@ -90,6 +96,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-istanbul');
     grunt.loadNpmTasks('grunt-env');
@@ -99,5 +106,5 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('coverage', ['jshint', 'env:coverage', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport']);
     grunt.registerTask('jenkins', ['jshint', 'env:coverage', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport']);
-    grunt.registerTask('default', ['jshint', 'mochaTest', 'browserify', 'yuidoc', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'mochaTest', 'concat', 'yuidoc', 'uglify']);
 };
