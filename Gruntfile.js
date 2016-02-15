@@ -13,14 +13,14 @@ module.exports = function (grunt) {
 		url: '<%= pkg.homepage %>',
                 options: {
 		    exclude: 'build,dist,doc',
-                    paths: ['./'],
+                    paths: ['./lib'],
                     outdir: 'doc/'
                 }
             }
         },
 
         jshint: {
-            all: ['leaflet-tracksymbol.js', 'lib/*.js']
+            all: ['lib/*.js']
         },
         
         mochaTest: {
@@ -63,6 +63,20 @@ module.exports = function (grunt) {
             print: 'detail'
           }
         },
+
+        browserify: {
+          'leaflet-tracksymbol.js': ['lib/tracksymbol.js']
+        },
+
+        uglify: {
+          options: {
+            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> Copyright by <%= pkg.author.name %> <%= pkg.author.email %> */\n'
+          },
+          build: {
+            src: '<%= pkg.name %>.js',
+            dest: '<%= pkg.name %>.min.js'
+          }
+        },
         
         mochacli: {
           options: {
@@ -76,12 +90,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-istanbul');
     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-browserify');
 
     grunt.registerTask('check', ['jshint']);
     grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('coverage', ['jshint', 'env:coverage', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport']);
     grunt.registerTask('jenkins', ['jshint', 'env:coverage', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport']);
-    grunt.registerTask('default', ['jshint', 'mochaTest', 'yuidoc']);
+    grunt.registerTask('default', ['jshint', 'mochaTest', 'browserify', 'yuidoc', 'uglify']);
 };
