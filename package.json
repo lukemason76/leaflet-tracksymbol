@@ -1,4 +1,4 @@
-{
+{ 
   "name": "leaflet-tracksymbol",
   "version": "1.0.1",
   "description": "A triangular symbol for showing tracks on a leaflet-layer",
