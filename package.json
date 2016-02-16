@@ -4,7 +4,7 @@
   "description": "A triangular symbol for showing tracks on a leaflet-layer",
   "main": "leaflet-tracksymbol.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node example.js"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org/"

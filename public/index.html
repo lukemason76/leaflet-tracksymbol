@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Map</title>
+	<title>TrackSymbol example</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,24 +13,23 @@
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 	<script src="leaflet-tracksymbol.js"></script>
 	<script>
+                var course = 0.0;
+                var position = L.latLng(54.15, 8.0);
 
-		var map = L.map('map').setView([53.5, 8.125], 10);
+		var map = L.map('map').setView(position, 10);
 
 		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		L.tileLayer(osmUrl, {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-			id: 'mapbox.streets'
+			maxZoom: 18
 		}).addTo(map);
 
-		var ts = L.trackSymbol(L.latLng(53.5, 8.125), {
+		var ts = L.trackSymbol(position, {
 			fill: true,
           		stroke: true,
 			speed: 10.0,
-			course: 45 * Math.PI / 180.0,
-			heading: 45 * Math.PI / 180.0,
+			course: course * Math.PI / 180.0,
+			heading: course * Math.PI / 180.0,
+			gpsRefPos: [100,100,20,20],
 	                radius: 3,
         	        fillColor: "#0000ff",
                 	color: "#000000",
@@ -40,6 +39,11 @@
 		});
 		ts.addTo(map);
 
+		setInterval(function() {
+			course += Math.PI * 10.0 / 180.0;
+			ts.setCourse(course);
+			ts.setHeading(course);
+		}, 1000);
 
 	</script>
 </body>
