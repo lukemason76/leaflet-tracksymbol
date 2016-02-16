@@ -21,7 +21,7 @@
     "bower_components",
     "test",
     "example.js",
-    "Gruntfile",
+    "Gruntfile.js",
     "publishTag.sh",
     "public"
   ]
