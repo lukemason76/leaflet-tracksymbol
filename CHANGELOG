@@ -1,0 +1,5 @@
+## v1.0.4 (February 19, 2016)
+
+Bugfixes:
+	- Fixed problem with undefined position when speed is empty
+	- Added tests for the above issue 
