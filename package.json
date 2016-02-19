@@ -1,4 +1,4 @@
-{     
+{
   "name": "leaflet-tracksymbol",
   "version": "1.0.2",
   "description": "A triangular symbol for showing tracks on a leaflet-layer",
@@ -27,6 +27,7 @@
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-jshint": "~0.11.2",
+    "grunt-contrib-qunit": "^1.0.1",
     "grunt-contrib-uglify": "~0.9.1",
     "grunt-contrib-yuidoc": "~0.7.0",
     "grunt-env": "^0.4.4",

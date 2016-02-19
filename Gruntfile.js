@@ -32,6 +32,10 @@ module.exports = function (grunt) {
         jshint: {
             all: ['lib/*.js']
         },
+    
+	qunit: {
+            all: ['test/*.html']
+        },
         
         mochaTest: {
           test: {
@@ -98,6 +102,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-istanbul');
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-browserify');
@@ -106,5 +111,5 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('coverage', ['jshint', 'env:coverage', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport']);
     grunt.registerTask('jenkins', ['jshint', 'env:coverage', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport']);
-    grunt.registerTask('default', ['jshint', 'mochaTest', 'concat', 'yuidoc', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'qunit', 'mochaTest', 'concat', 'yuidoc', 'uglify']);
 };

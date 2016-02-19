@@ -239,7 +239,7 @@ L.TrackSymbol = L.Path.extend({
   _createNoHeadingSymbolPathString: function() {
     var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._diaSymbol, 0.0) );
     var viewPath = this._createPathFromPoints(viewPoints);
-    if( this._course !== undefined ) {
+    if( this._course !== undefined && this._speed !== undefined ) {
       var courseAngle = this._getViewAngleFromModel(this._course);
       var leaderPoints = this._createLeaderViewPoints(courseAngle);
       viewPath += '' + this._createPathFromPoints(leaderPoints);
@@ -251,7 +251,7 @@ L.TrackSymbol = L.Path.extend({
     var headingAngle = this._getViewAngleFromModel(this._heading);
     var viewPoints = this._transformAllPointsToView( this._rotateAllPoints(this._triSymbol, headingAngle) );
     var viewPath = this._createPathFromPoints(viewPoints);
-    if( this._course !== undefined ) {
+    if( this._course !== undefined && this._speed !== undefined ) {
       var courseAngle = this._getViewAngleFromModel(this._course);
       var leaderPoints = this._createLeaderViewPoints(courseAngle);
       viewPath += '' + this._createPathFromPoints(leaderPoints);
@@ -304,7 +304,7 @@ L.TrackSymbol = L.Path.extend({
   _createSilouetteSymbolPathString: function() {
     var silouettePoints = this._transformSilouetteSymbol();
     var viewPath = this._createPathFromPoints(silouettePoints);
-    if( this._course !== undefined ) {
+    if( this._course !== undefined && this._speed !== undefined ) {
       var courseAngle = this._getViewAngleFromModel(this._course);
       var leaderPoints = this._createLeaderViewPoints(courseAngle);
       viewPath += '' + this._createPathFromPoints(leaderPoints);
