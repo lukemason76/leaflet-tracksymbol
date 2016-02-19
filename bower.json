@@ -1,7 +1,7 @@
 {  
   "name": "leaflet-tracksymbol",
   "main": "leaflet-tracksymbol.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "authors": [
     "Tim Leerhoff <tleerhof@web.de>"
   ],
