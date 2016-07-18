@@ -13,6 +13,10 @@ L.TrackLayer = function() {
   this.addTo = function(map) {
     aislayer.addTo(map);
   };
+  
+  this.clearLayers = function() {
+    aislayer.clearLayers();
+  };
 };
 
 L.trackLayer = function() {
