@@ -129,7 +129,7 @@ L.TrackSymbol = L.Path.extend({
    * @return {Number} The track id.
    */
   getTrackId: function() {
-    return this._trackId;
+    return this._id;
   },
     
   _getLatSize: function () {
